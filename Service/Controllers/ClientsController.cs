@@ -21,10 +21,10 @@ namespace Service.Controllers
             _clientRepository = clientRepository;
         }
         
-        //Listagem de clientes
+        //Listagem de clientes Utilizando Dapper
         public async Task<IActionResult> Index()
         {
-            var clients = await _clientRepository.GetAllAsync();
+            var clients = _clientRepository.GetAllDapperClients();
 
             var clientViewModel = clients.Select(x => new ClientViewModel
             {
@@ -45,7 +45,7 @@ namespace Service.Controllers
                 return NotFound();
             }
 
-            var client = await _clientRepository.GetByIdAsync(id);
+            var client = await _clientRepository.GetByIdAsync(id.ToString());
 
             if (client == null)
             {
@@ -90,7 +90,7 @@ namespace Service.Controllers
                 return NotFound();
             }
 
-            var client = await _clientRepository.GetByIdAsync(id);
+            var client = await _clientRepository.GetByIdAsync(id.ToString());
             if (client == null)
             {
                 return NotFound();
@@ -111,7 +111,7 @@ namespace Service.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Name,Email,Cpf,Id")] ClientViewModel clientViewModel)
         {
-            if (id != clientViewModel.Id)
+            if (id.ToString() != clientViewModel.Id)
             {
                 return NotFound();
             }
@@ -149,7 +149,7 @@ namespace Service.Controllers
                 return NotFound();
             }
             
-            var client = await _clientRepository.GetByIdAsync(id);
+            var client = await _clientRepository.GetByIdAsync(id.ToString());
 
             if (client == null)
             {
@@ -176,9 +176,9 @@ namespace Service.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        private async Task<bool> ClientExists(Guid id)
+        private async Task<bool> ClientExists(string id)
         {
-            var client = await _clientRepository.GetByIdAsync(id);
+            var client = await _clientRepository.GetByIdAsync(id.ToString());
 
             if (client != null)
             {

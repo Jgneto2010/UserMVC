@@ -7,5 +7,6 @@ namespace Domain.Interfaces
 {
     public interface IClient : IRepository<Client>
     {
+        List<Client> GetAllDapperClients();
     }
 }

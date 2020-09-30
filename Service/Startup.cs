@@ -31,6 +31,7 @@ namespace Service
               options.UseSqlServer(Configuration.GetConnectionString("StringConnects")));
             
             services.AddControllersWithViews();
+            services.AddScoped<DapperContext>();
             services.AddScoped<IClient, ClientRepository>();
            
         }

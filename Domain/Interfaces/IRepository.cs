@@ -12,7 +12,7 @@ namespace Domain.Interfaces
         void Add(T obj);
         Task<int> SaveChangesAsync();
         Task<List<T>> GetAllAsync();
-        Task<T> GetByIdAsync(Guid id);
+        Task<T> GetByIdAsync(string id);
         void Remove(Guid id);
         void UpDate(T entity);
     }
